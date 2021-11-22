@@ -3,9 +3,9 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
-      "start": "GIT_SHA=$(git show -s --format=%h) parcel src/index.html --port 3000",
+      "start": "parcel src/index.html --port 3000",
       "prebuild": "rm -rf dist/",
-      "build": "GIT_SHA=$(git show -s --format=%h) parcel build src/index.html"
+      "build": "parcel build src/index.html"
     },
     "browserslist": {
       "production": [

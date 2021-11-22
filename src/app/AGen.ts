@@ -78,6 +78,11 @@ export class AGen extends Generator {
         await this.target.prompt();
     }
 
+    configuring() {
+        if(this.answers.initGit)
+            this.spawnCommandSync("git", ["init"]);
+    }
+
     async writing() {
         this.target.copy();
         this.log("Resolving dependencies...");

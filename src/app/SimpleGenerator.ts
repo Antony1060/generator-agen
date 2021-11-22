@@ -32,7 +32,7 @@ export class SimpleGenerator extends BaseGenerator {
 
     dependencies(): Dependencies {
         if(this.answers.language === "js")
-            return { needed: [], dev: [] }
+            return { needed: [], dev: ["nodemon"] }
 
         return {
             needed: ["typescript", "ts-node"],
@@ -41,7 +41,17 @@ export class SimpleGenerator extends BaseGenerator {
     }
 
     copy() {
+        const fs = this.parent.fs;
 
+        const ejsContext = {
+            appName: this.parent.answers.appName,
+            ext: this.answers.language
+        }
+
+        // create index file
+        fs.write(this.parent.destinationPath(`src/index.${this.answers.language}`), "");
+
+        this.parent._copyPackageJson("simple/package.json", ejsContext);
     }
 
 }

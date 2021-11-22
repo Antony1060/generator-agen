@@ -1,0 +1,10 @@
+{
+    "name": "<%= appName %>",
+    "version": "1.0.0",
+    "main": "src/index.<%= ext %>",
+    "license": "MIT",
+    "scripts": {
+      "start": "<% if(ext === 'js') { %>node src/index.js<% } else { %>ts-node src/index.ts<% } %>",
+      "dev": "<% if(ext === 'js') { %>nodemon src/index.js<% } else { %>ts-node-dev src/index.ts<% } %>"
+    }
+}

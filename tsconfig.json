@@ -10,13 +10,12 @@
         "esModuleInterop": true,
         "target": "ESNext",
         "downlevelIteration": true,
-        "strict": true
+        "strict": true,
     },
     "include": [
         "src"
     ],
     "exclude": [
-        "node_modules",
-        "src/*/tempaltes"
+        "node_modules"
     ]
 }

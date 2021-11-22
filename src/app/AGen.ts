@@ -4,10 +4,11 @@ import { ReactGenerator } from "./ReactGenerator";
 import { ExpressGenerator } from "./ExpressGenerator";
 import { SimpleGenerator } from "./SimpleGenerator";
 import { BaseGenerator } from "./BaseGenerator";
+import ejs, { Options as EJSOptions } from "ejs";
 
 type Answers = {
     appName: string,
-    packageManager: "npm" | "yarn"
+    packageManager: "npm" | "yarn",
     type: "react" | "express" | "simple"
 }
 
@@ -70,14 +71,25 @@ export class AGen extends Generator {
         await this.target.prompt();
     }
 
-    writing() {
+    async writing() {
         this.target.copy();
+        this.log("Resolving dependencies...");
+        await this._installDeps();
     }
 
-    installdeps() {
+    async _installDeps() {
         const dependencies = this.target.dependencies();
-        this.addDevDependencies(dependencies.dev);
-        this.addDependencies(dependencies.needed);
+        await this.addDependencies(dependencies.needed);
+        await this.addDevDependencies(dependencies.dev);
+    }
+
+    _copyPackageJson(path: string, context: { [key: string]: unknown }) {
+        this.packageJson.merge(JSON.parse(ejs.render(this.fs.read(this.templatePath(path)), context)))
+    }
+
+    // this.fs.copyTpl but it ignores package.json
+    _copyTpl(paths: string | string[], to: string, context?: { [key: string]: unknown }, ejsOptions?: EJSOptions) {
+        this.fs.copyTpl(paths, to, context, ejsOptions, { globOptions: { ignore: "package.json" } })
     }
 
     end() {

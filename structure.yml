@@ -13,11 +13,11 @@ node-express:
     
 react:
   options:
-    - styled-components
-    - axios
+    - styled-components -default
+    - react-router - default
     - easy-peasy
+    - axios
     - formik
-    - react-router
     - yup
 
 simple:

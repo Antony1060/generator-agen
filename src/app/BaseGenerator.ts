@@ -1,4 +1,4 @@
-import Generator from "yeoman-generator";
+import { AGen } from "./AGen";
 
 export type Dependencies = {
     needed: string[],
@@ -6,7 +6,7 @@ export type Dependencies = {
 }
 
 export abstract class BaseGenerator {
-    constructor(protected parent: Generator) {}
+    constructor(protected parent: AGen) {}
     abstract prompt(): Promise<void>
     abstract copy(): void
     abstract dependencies(): Dependencies

@@ -13,6 +13,7 @@ type Answers = {
 
 export class AGen extends Generator {
 
+    public answers!: Answers
     private target!: BaseGenerator
 
     constructor(args: string | string[], opts: any) {
@@ -48,11 +49,11 @@ export class AGen extends Generator {
             }
         ]
 
-        const answers = await this.prompt<Answers>(prompts);
+        this.answers = await this.prompt<Answers>(prompts);
         
-        this.env.options.nodePackageManager = answers.packageManager;
+        this.env.options.nodePackageManager = this.answers.packageManager;
 
-        switch(answers.type) {
+        switch(this.answers.type) {
             case "react":
                 this.target = new ReactGenerator(this);
                 break;
@@ -64,7 +65,7 @@ export class AGen extends Generator {
                 break;
         }
 
-        this.log(`Running generator for ${chalk.yellowBright`${answers.appName}`}: ${chalk.greenBright`${this.target.constructor.name}`}`)
+        this.log(`Running generator for ${chalk.yellowBright`${this.answers.appName}`}: ${chalk.greenBright`${this.target.constructor.name}`}`)
         
         await this.target.prompt();
     }

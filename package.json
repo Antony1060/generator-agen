@@ -1,0 +1,28 @@
+{
+  "name": "generator-agen",
+  "version": "1.0.0",
+  "description": "A utility to bootstrap frontend and backend applications",
+  "main": "generators/app/index.js",
+  "author": "Antony1060",
+  "license": "MIT",
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "scripts": {
+    "watch": "tsc-watch",
+    "run": "ts-node node_modules/.bin/yo ./src/app"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "yeoman-generator": "^5.4.2",
+    "yo": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/yeoman-generator": "^5.2.7",
+    "tsc-watch": "^4.5.0",
+    "typescript": "^4.5.2"
+  }
+}

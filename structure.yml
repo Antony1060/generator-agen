@@ -1,0 +1,25 @@
+GLOBAL:
+  prompts:
+    - prompt: app_name
+
+node-express:
+  prompts:
+    - prompt: install logging utility (chalk)
+      prompt: support enviornment variables (dotenv)
+  options:
+    - cors
+    - body-parser
+    - axios
+    
+react:
+  options:
+    - styled-components
+    - axios
+    - easy-peasy
+    - formik
+    - react-router
+    - yup
+
+simple:
+  prompts:
+    - prompt: language (js/ts)

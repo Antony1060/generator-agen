@@ -46,19 +46,44 @@ export class ExpressGenerator extends BaseGenerator {
     }
 
     dependencies() {
-        const needed = ["typescript", "ts-node", ...this.answers.fixedDependencies];
+        const needed = ["express", "typescript", "ts-node", ...this.answers.fixedDependencies];
         if(this.answers.env)
             needed.push("dotenv");
         if(this.answers.logging)
             needed.push("chalk");
+
+        const dev = ["@types/express", "@types/node", "ts-node-dev"];
+        if(this.answers.fixedDependencies.includes("cors"))
+            dev.push("@types/cors");
         return {
             needed,
-            dev: ["@types/node", "ts-node-dev"]
+            dev
         }
     }
 
     copy() {
+        const { needed } = this.dependencies();
 
+        const ejsContext = {
+            appName: this.parent.answers.appName,
+            envSupport: this.answers.env,
+            logging: this.answers.logging,
+            bodyParser: needed.includes("body-parser"),
+            cors: needed.includes("cors"),
+        }
+
+        this.parent._copyTpl(this.parent.templatePath("node-express"), this.parent.destinationPath(), ejsContext);
+        if(this.answers.env) {
+            this.parent.fs.write(this.parent.destinationPath(".env"), "DEBUG=true\nPORT=8080");
+            this.parent.fs.write(this.parent.destinationPath(".env.example"), "DEBUG=true\nPORT=8080");
+        } else {
+            this.parent.fs.delete(this.parent.destinationPath("typings"));
+        }
+
+        if(!this.answers.logging)
+            this.parent.fs.delete(this.parent.destinationPath("util"));
+
+        this.parent._copyPackageJson("node-express/package.json", ejsContext);
     }
 
 }

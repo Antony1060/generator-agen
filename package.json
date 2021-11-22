@@ -14,12 +14,11 @@
   "scripts": {
     "watch:ts": "tsc-watch",
     "watch:templates": "onchange 'src/*/templates/**' --initial -- yarn copy-templates",
-    "copy-templates": "copyfiles --all --up 1 'src/*/templates/**' generators",
+    "copy-templates": "rm -rf generators/app/templates && cp -r src/app/templates generators/app/templates",
     "run": "ts-node node_modules/.bin/yo ./src/app"
   },
   "dependencies": {
     "chalk": "^4.1.2",
-    "copyfiles": "^2.4.1",
     "ejs": "^3.1.6",
     "yeoman-generator": "^5.4.2",
     "yo": "^4.3.0"

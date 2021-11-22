@@ -1,0 +1,22 @@
+{
+    "name": "<%= appName %>",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+      "start": "GIT_SHA=$(git show -s --format=%h) parcel src/index.html --port 3000",
+      "prebuild": "rm -rf dist/",
+      "build": "GIT_SHA=$(git show -s --format=%h) parcel build src/index.html"
+    },
+    "browserslist": {
+      "production": [
+        "last 5 chrome version",
+        "last 5 firefox version",
+        "last 5 safari version"
+      ],
+      "development": [
+        "last 1 chrome version",
+        "last 1 firefox version",
+        "last 1 safari version"
+      ]
+    }
+  }

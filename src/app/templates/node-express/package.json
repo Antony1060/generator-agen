@@ -1,0 +1,10 @@
+{
+    "name": "<%= appName %>",
+    "version": "1.0.0",
+    "license": "MIT",
+    "main": "./src/app.ts",
+    "scripts": {
+      "start": "ts-node ./src/app.ts",
+      "dev": "ts-node-dev ./src/app.ts"
+    }
+}

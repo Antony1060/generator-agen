@@ -50,6 +50,8 @@ export class SimpleGenerator extends BaseGenerator {
 
         // create index file
         fs.write(this.parent.destinationPath(`src/index.${this.answers.language}`), "");
+        if(this.parent.answers.initGit)
+            fs.copyTpl(this.parent.templatePath("simple/gitignore"), this.parent.destinationPath(".gitignore"));
 
         this.parent._copyPackageJson("simple/package.json", ejsContext);
     }

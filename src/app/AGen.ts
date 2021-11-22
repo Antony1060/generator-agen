@@ -8,6 +8,7 @@ import ejs, { Options as EJSOptions } from "ejs";
 
 type Answers = {
     appName: string,
+    initGit: boolean,
     packageManager: "npm" | "yarn",
     type: "react" | "express" | "simple"
 }
@@ -37,6 +38,12 @@ export class AGen extends Generator {
                     { name: "NPM", value: "npm" },
                     { name: "Yarn", value: "yarn" }
                 ]
+            },
+            {
+                type: "confirm",
+                name: "initGit",
+                message: "Initialize as git repository?",
+                default: true
             },
             {
                 type: "list",
@@ -89,7 +96,13 @@ export class AGen extends Generator {
 
     // this.fs.copyTpl but it ignores package.json
     _copyTpl(paths: string | string[], to: string, context?: { [key: string]: unknown }, ejsOptions?: EJSOptions) {
-        this.fs.copyTpl(paths, to, context, ejsOptions, { globOptions: { ignore: "package.json" } })
+        this.fs.copyTpl(paths, to, context, ejsOptions, { globOptions: { ignore: "package.json" } });
+        if(this.fs.exists(this.destinationPath("gitignore"))) {
+            if(this.answers.initGit)
+                this.fs.move(this.destinationPath("gitignore"), this.destinationPath(".gitignore"));
+            else
+                this.fs.delete(this.destinationPath("gitignore"));
+        }
     }
 
     end() {

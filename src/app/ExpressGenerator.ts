@@ -3,12 +3,14 @@ import { AGen } from "./AGen";
 import { BaseGenerator } from "./BaseGenerator";
 
 type Answers = {
-    logging: boolean,
     env: boolean,
+    logging: boolean,
     fixedDependencies: string[]
 }
 
 export class ExpressGenerator extends BaseGenerator {
+
+    private answers!: Answers;
 
     constructor(parent: AGen) {
         super(parent)
@@ -40,11 +42,19 @@ export class ExpressGenerator extends BaseGenerator {
             }
         ]
 
-        await this.parent.prompt<Answers>(prompts);
+        this.answers = await this.parent.prompt<Answers>(prompts);
     }
 
     dependencies() {
-        return { needed: [], dev: [] }
+        const needed = ["typescript", "ts-node", ...this.answers.fixedDependencies];
+        if(this.answers.env)
+            needed.push("dotenv");
+        if(this.answers.logging)
+            needed.push("chalk");
+        return {
+            needed,
+            dev: ["@types/node", "ts-node-dev"]
+        }
     }
 
     copy() {

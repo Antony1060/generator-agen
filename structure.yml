@@ -2,7 +2,7 @@ GLOBAL:
   prompts:
     - prompt: app_name
 
-node-express:
+express:
   prompts:
     - prompt: install logging utility (chalk)
       prompt: support enviornment variables (dotenv)
@@ -14,7 +14,7 @@ node-express:
 react:
   options:
     - styled-components -default
-    - react-router - default
+    - react-router-dom - default
     - easy-peasy
     - axios
     - formik

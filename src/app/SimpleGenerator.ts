@@ -1,12 +1,14 @@
 import Generator from "yeoman-generator";
 import { AGen } from "./AGen";
-import { BaseGenerator } from "./BaseGenerator";
+import { BaseGenerator, Dependencies } from "./BaseGenerator";
 
 type Answers = {
     language: "js" | "ts"
 }
 
 export class SimpleGenerator extends BaseGenerator {
+
+    private answers!: Answers
 
     constructor(parent: AGen) {
         super(parent)
@@ -25,11 +27,17 @@ export class SimpleGenerator extends BaseGenerator {
             }
         ]
 
-        await this.parent.prompt<Answers>(prompts);
+        this.answers = await this.parent.prompt<Answers>(prompts);
     }
 
-    dependencies() {
-        return { needed: [], dev: [] }
+    dependencies(): Dependencies {
+        if(this.answers.language === "js")
+            return { needed: [], dev: [] }
+
+        return {
+            needed: ["typescript", "ts-node"],
+            dev: ["@types/node", "ts-node-dev"]
+        }
     }
 
     copy() {

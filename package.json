@@ -18,7 +18,7 @@
     "watch:templates": "onchange 'src/*/templates/**' --initial -- yarn copy-templates",
     "copy-templates": "rm -rf generators/app/templates && cp -r src/app/templates generators/app/templates",
     "run": "ts-node node_modules/.bin/yo ./src/app",
-    "prepublish": "yarn build"
+    "prepublish": "yarn build && yarn copy-templates"
   },
   "dependencies": {
     "chalk": "^4.1.2",

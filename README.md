@@ -50,6 +50,6 @@ And that's basically it!
     ```
     .
     ├── src
-    │   └── index.jss
+    │   └── index.js
     └── package.json
     ```
